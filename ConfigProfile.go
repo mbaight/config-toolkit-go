@@ -89,5 +89,4 @@ func NewFileConfigProfileWithVersion(fileEncoding string, contentType int, versi
 			Version:        version,
 		},
 	}
-
 }
