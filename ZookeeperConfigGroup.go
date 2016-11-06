@@ -15,6 +15,7 @@ type ZookeeperConfigGroup struct {
 	*GeneralConfigGroup
 }
 
+//新Zk配置组
 func NewZookeeperConfigGroup(configProfile *ZookeeperConfigProfile, node string) (*ZookeeperConfigGroup, error) {
 	group := &ZookeeperConfigGroup{
 		configProfile:      configProfile,
@@ -29,6 +30,7 @@ func NewZookeeperConfigGroup(configProfile *ZookeeperConfigProfile, node string)
 	return group, nil
 }
 
+//新Zk配置组,并缓存到本地
 func NewZookeeperConfigGroupWithCache(configProfile *ZookeeperConfigProfile, node string, cachePath string) (*ZookeeperConfigGroup, error) {
 	group := &ZookeeperConfigGroup{
 		configProfile:      configProfile,
@@ -190,10 +192,9 @@ func (this *ZookeeperConfigGroup) loadKey(nodePath string) (string, string, erro
 
 /**
  * 导出属性列表
- *
  */
 func (this *ZookeeperConfigGroup) exportProperties() map[string]string {
-	result := make(map[string]string, this.Size())
+	result := make(map[string]string, this.size())
 
 	this.ForEach(func(key, value string) {
 		result[key] = value

@@ -10,12 +10,17 @@ import (
 func TestNewZookeeperConfigGroupWithCache(t *testing.T) {
 	version := `0.0.1`
 	configProfile := config.NewZkConfigProfile(
-		`192.168.1.159:2181`,
-		`/yidonglianjie-alimama`,
+		`localhost:2181`,
+		`/config`,
 		version,
 	)
 
-	zkConfigGroup, err := config.NewZookeeperConfigGroupWithCache(configProfile, `alimama`, `e:\properties\alimama.properties`)
+	zkConfigGroup, err := config.NewZookeeperConfigGroupWithCache(
+		configProfile,
+		`application`,
+		`/etc/application.cache`,
+	)
+
 	assert.NoError(t, err, `NewZookeeperConfigGroupWithCache failed:%v`, configProfile)
 
 	zkConfigGroup.ForEach(func(key, value string) {
@@ -26,18 +31,23 @@ func TestNewZookeeperConfigGroupWithCache(t *testing.T) {
 func TestNewFileConfigGroup(t *testing.T) {
 	version := `0.0.1`
 	configProfile := config.NewZkConfigProfile(
-		`192.168.1.159:2181`,
-		`/yidonglianjie-alimama`,
+		`localhost:2181`,
+		`/config`,
 		version,
 	)
 
-	zkConfigGroup, err := config.NewZookeeperConfigGroupWithCache(configProfile, `alimama`, `e:\\properties\alimama.properties`)
+	zkConfigGroup, err := config.NewZookeeperConfigGroupWithCache(
+		configProfile,
+		`application`,
+		`/etc/application.cache`,
+	)
+
 	assert.NoError(t, err, `NewZookeeperConfigGroupWithCache failed:%v`, configProfile)
 
 	fileConfigGroup, err := config.NewFileConfigGroup(
 		zkConfigGroup,
 		config.NewFileConfigProfileWithVersion(`UTF8`, config.ContentType_properties, version),
-		`e:\\properties\alimama.properties`,
+		`/etc/application.properties`,
 	)
 	assert.NoError(t, err, `NewFileConfigGroup failed:%v`, configProfile)
 
